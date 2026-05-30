@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ask_a_questions",
+  "info": {
+    "singularName": "ask-a-question",
+    "pluralName": "ask-a-questions",
+    "displayName": "Ask A Question"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "country": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "question": {
+      "type": "text"
+    },
+    "response": {
+      "type": "text"
+    },
+    "send_response": {
+      "type": "boolean",
+      "default": false
+    },
+    "question_reference": {
+      "type": "string"
+    },
+    "response_sent_at": {
+      "type": "datetime"
+    }
+  }
+}

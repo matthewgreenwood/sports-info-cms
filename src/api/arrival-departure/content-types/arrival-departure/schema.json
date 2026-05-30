@@ -1,0 +1,71 @@
+{
+  "kind": "collectionType",
+  "collectionName": "arrivals_departures",
+  "info": {
+    "singularName": "arrival-departure",
+    "pluralName": "arrivals-departures",
+    "displayName": "Arrivals Departures"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "delegation_member": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::add-delegation-member.add-delegation-member"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "arrival_date": {
+      "type": "date"
+    },
+    "arrival_time": {
+      "type": "time"
+    },
+    "arrival_location": {
+      "type": "string"
+    },
+    "arrival_flight_number": {
+      "type": "string"
+    },
+    "arrival_notes": {
+      "type": "string"
+    },
+    "departure_date": {
+      "type": "date"
+    },
+    "departure_time": {
+      "type": "time"
+    },
+    "departure_location": {
+      "type": "string"
+    },
+    "departure_flight_number": {
+      "type": "string"
+    },
+    "departure_pick_up_time": {
+      "type": "time"
+    },
+    "departure_pick_up_location": {
+      "type": "string"
+    },
+    "departure_notes": {
+      "type": "string"
+    },
+    "travel_details_submitted_by": {
+      "type": "string"
+    },
+    "travel_details_submitted_by_email": {
+      "type": "email"
+    },
+    "travel_details_reference_number": {
+      "type": "string"
+    }
+  }
+}

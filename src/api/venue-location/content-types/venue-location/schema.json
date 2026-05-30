@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "venue_locations",
+  "info": {
+    "singularName": "venue-location",
+    "pluralName": "venue-locations",
+    "displayName": "Venue Locations"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "venue_location_parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::venue-location.venue-location"
+    },
+    "order": {
+      "type": "decimal"
+    },
+    "venue_apparatus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::apparatus.apparatus"
+    }
+  }
+}

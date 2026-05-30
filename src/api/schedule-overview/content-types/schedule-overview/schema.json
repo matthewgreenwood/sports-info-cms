@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "schedule_overviews",
+  "info": {
+    "singularName": "schedule-overview",
+    "pluralName": "schedule-overviews",
+    "displayName": "Schedule Overview"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "day": {
+      "type": "date"
+    },
+    "schedule_overview_row": {
+      "type": "component",
+      "component": "table.table-row",
+      "repeatable": true
+    }
+  }
+}

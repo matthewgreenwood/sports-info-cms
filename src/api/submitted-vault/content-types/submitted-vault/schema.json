@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "submitted_vaults",
+  "info": {
+    "singularName": "submitted-vault",
+    "pluralName": "submitted-vaults",
+    "displayName": "Submitted Vaults"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "submitted_vault_discipline": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::discipline.discipline"
+    },
+    "submitted_vault_competition": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::competition.competition"
+    },
+    "submitted_vault_gymnast": {
+      "type": "string"
+    },
+    "submitted_vault_gymnast_id": {
+      "type": "string"
+    },
+    "submitted_vault_gymnast_country": {
+      "type": "string"
+    },
+    "submitted_vault_1": {
+      "type": "string"
+    },
+    "submitted_vault_2": {
+      "type": "string"
+    },
+    "submitted_vault_reference": {
+      "type": "string",
+      "unique": true
+    },
+    "submitted_vault_by": {
+      "type": "string"
+    },
+    "submitted_vault_by_email": {
+      "type": "email"
+    }
+  }
+}

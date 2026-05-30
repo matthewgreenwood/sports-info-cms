@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "information_tourists",
+  "info": {
+    "singularName": "information-tourist",
+    "pluralName": "information-tourists",
+    "displayName": "Information Tourist"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

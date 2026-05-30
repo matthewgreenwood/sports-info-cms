@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_invitations",
+  "info": {
+    "singularName": "user-invitation",
+    "pluralName": "user-invitations",
+    "displayName": "User Invitation"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "role_selection": {
+      "type": "customField",
+      "customField": "global::invitation-role-select"
+    },
+    "invitation_token": {
+      "type": "string",
+      "private": true
+    },
+    "invitation_status": {
+      "type": "enumeration",
+      "enum": ["Pending", "Sent", "Activated"],
+      "default": "Pending"
+    },
+    "invited_at": {
+      "type": "datetime"
+    },
+    "sent_at": {
+      "type": "datetime"
+    },
+    "activated_at": {
+      "type": "datetime"
+    },
+    "expires_at": {
+      "type": "datetime"
+    },
+    "invited_by_email": {
+      "type": "string"
+    }
+  }
+}

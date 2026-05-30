@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "password_resets",
+  "info": {
+    "singularName": "password-reset",
+    "pluralName": "password-resets",
+    "displayName": "Password Reset"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "reset_token": {
+      "type": "string",
+      "private": true,
+      "required": true
+    },
+    "expires_at": {
+      "type": "datetime",
+      "required": true
+    },
+    "used": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

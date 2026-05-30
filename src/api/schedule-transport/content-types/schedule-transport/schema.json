@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "schedule_transports",
+  "info": {
+    "singularName": "schedule-transport",
+    "pluralName": "schedule-transports",
+    "displayName": "Schedule Transport Shuttles"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "transport_shuttles_date": {
+      "type": "date"
+    },
+    "transport_shuttles_route": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::transport-shuttles-route.transport-shuttles-route"
+    },
+    "transport_shuttles_details": {
+      "type": "component",
+      "component": "table.transport-shuttles-table-row",
+      "repeatable": true
+    }
+  }
+}

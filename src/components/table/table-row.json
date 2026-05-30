@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_table_table_rows",
+  "info": {
+    "displayName": "table_row"
+  },
+  "options": {},
+  "attributes": {
+    "detail": {
+      "type": "string"
+    },
+    "time": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "schedule_item_types": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::schedule-item-type.schedule-item-type"
+    }
+  },
+  "config": {}
+}

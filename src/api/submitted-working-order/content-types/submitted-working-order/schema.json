@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "submitted_working_orders",
+  "info": {
+    "singularName": "submitted-working-order",
+    "pluralName": "submitted-working-orders",
+    "displayName": "Submitted Working Orders"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "submitted_working_order_country": {
+      "type": "string"
+    },
+    "submitted_working_order_discipline": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::discipline.discipline"
+    },
+    "submitted_working_order_competition": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::competition.competition"
+    },
+    "submitted_working_order_apparatus": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::apparatus.apparatus"
+    },
+    "submitted_working_order_gymnast": {
+      "type": "string"
+    },
+    "submitted_working_order_order": {
+      "type": "integer"
+    },
+    "submitted_working_order_reference": {
+      "type": "string"
+    },
+    "submitted_working_order_by": {
+      "type": "string"
+    },
+    "submitted_working_order_by_email": {
+      "type": "email"
+    }
+  }
+}

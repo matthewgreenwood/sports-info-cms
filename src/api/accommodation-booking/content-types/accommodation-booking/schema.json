@@ -1,0 +1,113 @@
+{
+  "kind": "collectionType",
+  "collectionName": "accommodation_bookings",
+  "info": {
+    "singularName": "accommodation-booking",
+    "pluralName": "accommodation-bookings",
+    "displayName": "Accommodation Request"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "booking_type": {
+      "type": "string"
+    },
+    "booking_country": {
+      "type": "string"
+    },
+    "booking_check_in_date": {
+      "type": "date"
+    },
+    "booking_check_out_date": {
+      "type": "date"
+    },
+    "booking_reference_room": {
+      "type": "string",
+      "unique": true
+    },
+    "booking_accessible_room": {
+      "type": "enumeration",
+      "default": "No",
+      "enum": [
+        "Yes",
+        "No"
+      ]
+    },
+    "booking_submitted_by": {
+      "type": "string"
+    },
+    "booking_submitted_by_email": {
+      "type": "email"
+    },
+    "booking_allocated_hotel": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::accommodation-hotel.accommodation-hotel"
+    },
+    "booking_status": {
+      "type": "enumeration",
+      "default": "Pending",
+      "enum": [
+        "Pending",
+        "Allocated",
+        "Confirmed",
+        "Declined",
+        "Waiting List",
+        "Other Option Allocated",
+        "Redundant",
+        "Cancelled"
+      ]
+    },
+    "booking_reference_submission": {
+      "type": "string"
+    },
+    "booking_notes": {
+      "type": "string"
+    },
+    "booking_requested_hotel_room_type": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::hotel-room-type-link.hotel-room-type-link"
+    },
+    "booking_requested_hotel_room_cost_per_person": {
+      "type": "decimal"
+    },
+    "booking_send_confirmation": {
+      "type": "boolean",
+      "default": false
+    },
+    "booking_confirmation_sent_at": {
+      "type": "datetime"
+    },
+    "booking_request_hotel_option_choice": {
+      "type": "integer"
+    },
+    "booking_to_be_paid_by": {
+      "type": "enumeration",
+      "default": "User",
+      "enum": [
+        "User",
+        "LOC",
+        "WG",
+        "National Federation",
+        "Person"
+      ]
+    },
+    "booking_payment_status": {
+      "type": "enumeration",
+      "enum": [
+        "No Payment Received",
+        "Deposit Received",
+        "Balance received"
+      ]
+    },
+    "booking_allocated_members": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::add-delegation-member.add-delegation-member",
+      "inversedBy": "accommodation_room_allocations"
+    }
+  }
+}

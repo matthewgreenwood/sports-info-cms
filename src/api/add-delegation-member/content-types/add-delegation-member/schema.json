@@ -1,0 +1,139 @@
+{
+  "kind": "collectionType",
+  "collectionName": "add_delegation_members",
+  "info": {
+    "singularName": "add-delegation-member",
+    "pluralName": "add-delegation-members",
+    "displayName": "Add Delegation Members"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "country": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "date_of_birth": {
+      "type": "date"
+    },
+    "role": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::accreditation-role.accreditation-role"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "submitted_by": {
+      "type": "string"
+    },
+    "submitted_by_email": {
+      "type": "email"
+    },
+    "passport_number": {
+      "type": "string"
+    },
+    "passport_expiry_date": {
+      "type": "date"
+    },
+    "passport_nationality": {
+      "type": "string"
+    },
+    "visa_letter_requested": {
+      "type": "boolean",
+      "default": false
+    },
+    "approve_visa_request": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "visa_letter_requested"
+            },
+            true
+          ]
+        }
+      },
+      "default": false
+    },
+    "send_visa_request_letter": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "visa_letter_requested"
+            },
+            true
+          ]
+        }
+      },
+      "default": false
+    },
+    "visa_letter_sent": {
+      "type": "boolean",
+      "conditions": {
+        "visible": {
+          "!=": [
+            {
+              "var": "send_visa_request_letter"
+            },
+            false
+          ]
+        }
+      },
+      "default": false
+    },
+    "visa_letter_sent_at": {
+      "type": "datetime"
+    },
+    "visa_pdf_file": {
+      "type": "string",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "approve_visa_request"
+            },
+            true
+          ]
+        }
+      }
+    },
+    "visa_notes": {
+      "type": "blocks"
+    },
+    "accommodation_room_allocations": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::accommodation-booking.accommodation-booking",
+      "mappedBy": "booking_allocated_members",
+      "private": true
+    },
+    "event_status": {
+      "type": "enumeration",
+      "enum": [
+        "Long List",
+        "Delegation Member",
+        "Cancelled",
+        "Deleted"
+      ],
+      "default": "Long List"
+    }
+  }
+}

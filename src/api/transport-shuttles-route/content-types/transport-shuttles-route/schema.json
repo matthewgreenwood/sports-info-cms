@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "transport_shuttles_routes",
+  "info": {
+    "singularName": "transport-shuttles-route",
+    "pluralName": "transport-shuttles-routes",
+    "displayName": "Transport Shuttles Route"
+  },
+  "options": {
+    "draftAndPublish": true,
+    "titleField": "transport_shuttles_routes_title"
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "transport_shuttles_routes_title": {
+      "type": "string",
+      "required": true
+    },
+    "transport_shuttles_routes_number": {
+      "type": "string"
+    },
+    "transport_shuttles_routes_notes": {
+      "type": "string"
+    }
+  }
+}

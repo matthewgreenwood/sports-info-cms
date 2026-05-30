@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hotel_room_type_links",
+  "info": {
+    "singularName": "hotel-room-type-link",
+    "pluralName": "hotel-room-type-links",
+    "displayName": "Accommodation Hotel Room Types"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Description": {
+      "type": "string"
+    },
+    "accommodation_room_type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::accommodation-room-type.accommodation-room-type",
+      "inversedBy": "hotel_room_type_links"
+    },
+    "accommodation_hotel": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::accommodation-hotel.accommodation-hotel",
+      "inversedBy": "hotel_room_type_links"
+    },
+    "room_cost_per_person": {
+      "type": "decimal",
+      "default": 0
+    },
+    "total_rooms": {
+      "type": "integer"
+    },
+    "total_rooms_allocated": {
+      "type": "integer"
+    }
+  }
+}

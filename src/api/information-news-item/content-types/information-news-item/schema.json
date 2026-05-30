@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "information_news_items",
+  "info": {
+    "singularName": "information-news-item",
+    "pluralName": "information-news-items",
+    "displayName": "Information News"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "visible_to_roles": {
+      "type": "json",
+      "customField": "global::news-role-checkboxes"
+    }
+  }
+}

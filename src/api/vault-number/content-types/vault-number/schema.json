@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vault_numbers",
+  "info": {
+    "singularName": "vault-number",
+    "pluralName": "vault-numbers",
+    "displayName": "Vault Numbers"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "discipline": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::discipline.discipline"
+    },
+    "title": {
+      "type": "string"
+    },
+    "number": {
+      "type": "string"
+    },
+    "value": {
+      "type": "decimal"
+    }
+  }
+}

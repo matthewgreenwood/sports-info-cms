@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "schedule_item_types",
+  "info": {
+    "singularName": "schedule-item-type",
+    "pluralName": "schedule-item-types",
+    "displayName": "Schedule Item Type"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "schedule_item_type": {
+      "type": "string"
+    }
+  }
+}

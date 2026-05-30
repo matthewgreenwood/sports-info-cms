@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_table_transport_shuttles_table_rows",
+  "info": {
+    "displayName": "transport_shuttles_table_row"
+  },
+  "options": {},
+  "attributes": {
+    "transport_shuttles_pick_up_location": {
+      "type": "string"
+    },
+    "transport_shuttles_pick_up_time": {
+      "type": "time"
+    },
+    "transport_shuttles_destination_location": {
+      "type": "string"
+    },
+    "transport_shuttles_destination_arrival_time": {
+      "type": "time"
+    },
+    "transport_shuttles_notes": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

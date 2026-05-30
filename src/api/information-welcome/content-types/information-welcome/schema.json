@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "information_welcomes",
+  "info": {
+    "singularName": "information-welcome",
+    "pluralName": "information-welcomes",
+    "displayName": "Information Welcome"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

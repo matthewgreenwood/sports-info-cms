@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "apparatuses",
+  "info": {
+    "singularName": "apparatus",
+    "pluralName": "apparatuses",
+    "displayName": "Apparatus"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "discipline": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::discipline.discipline"
+    },
+    "order": {
+      "type": "integer"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "accreditation_roles",
+  "info": {
+    "singularName": "accreditation-role",
+    "pluralName": "accreditation-roles",
+    "displayName": "Accreditation Roles"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "accreditation_role": {
+      "type": "string"
+    }
+  }
+}

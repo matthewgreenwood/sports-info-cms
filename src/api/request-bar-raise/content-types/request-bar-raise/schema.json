@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "request_bar_raises",
+  "info": {
+    "singularName": "request-bar-raise",
+    "pluralName": "request-bar-raises",
+    "displayName": "Request Bar Raise"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "submitted_bar_raise_gymnast": {
+      "type": "string"
+    },
+    "submitted_bar_raise_gymnast_id": {
+      "type": "string"
+    },
+    "submitted_bar_raise_gymnast_country": {
+      "type": "string"
+    },
+    "submitted_bar_raise_notes": {
+      "type": "string"
+    },
+    "submitted_bar_raise_reference": {
+      "type": "string",
+      "unique": true
+    },
+    "submitted_bar_raise_by": {
+      "type": "string"
+    },
+    "submitted_bar_raise_by_email": {
+      "type": "email"
+    },
+    "submitted_bar_raise_approved": {
+      "type": "boolean"
+    },
+    "submitted_bar_raise_approved_notes": {
+      "type": "string"
+    },
+    "submitted_bar_raise_approved_by": {
+      "type": "string"
+    },
+    "submitted_bar_raise_decision_sent": {
+      "type": "boolean",
+      "default": false
+    },
+    "submitted_bar_raise_decision_sent_at": {
+      "type": "datetime"
+    }
+  }
+}

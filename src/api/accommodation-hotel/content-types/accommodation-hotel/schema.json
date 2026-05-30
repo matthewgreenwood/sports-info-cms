@@ -1,0 +1,68 @@
+{
+  "kind": "collectionType",
+  "collectionName": "accommodation_hotels",
+  "info": {
+    "singularName": "accommodation-hotel",
+    "pluralName": "accommodation-hotels",
+    "displayName": "Accommodation Hotels"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hotel_name": {
+      "type": "string"
+    },
+    "hotel_type": {
+      "type": "enumeration",
+      "enum": [
+        "FIG & Delegations",
+        "Delegations",
+        "Judges"
+      ]
+    },
+    "hotel_category": {
+      "type": "enumeration",
+      "enum": [
+        "One",
+        "Two",
+        "Three"
+      ]
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "location_map": {
+      "type": "text"
+    },
+    "hotel_website": {
+      "type": "text"
+    },
+    "currency": {
+      "type": "enumeration",
+      "enum": [
+        "CHF",
+        "Euro",
+        "GBP",
+        "USD"
+      ]
+    },
+    "hotel_room_type_links": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hotel-room-type-link.hotel-room-type-link",
+      "mappedBy": "accommodation_hotel"
+    }
+  }
+}

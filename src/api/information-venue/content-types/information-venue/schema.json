@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "information_venues",
+  "info": {
+    "singularName": "information-venue",
+    "pluralName": "information-venues",
+    "displayName": "Information Venue"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "blocks"
+    },
+    "image": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}
