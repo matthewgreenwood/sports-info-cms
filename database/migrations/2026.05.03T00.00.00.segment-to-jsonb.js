@@ -13,6 +13,18 @@
  */
 
 async function up(knex) {
+  const hasPushNotificationsTable = await knex.schema.hasTable('push_notifications');
+
+  if (!hasPushNotificationsTable) {
+    return;
+  }
+
+  const hasSegmentColumn = await knex.schema.hasColumn('push_notifications', 'segment');
+
+  if (!hasSegmentColumn) {
+    return;
+  }
+
   // Only touch rows where the value exists and is not already valid JSON
   // (i.e. doesn't start with [ or { or ").
   await knex.raw(`
@@ -27,6 +39,18 @@ async function up(knex) {
 }
 
 async function down(knex) {
+  const hasPushNotificationsTable = await knex.schema.hasTable('push_notifications');
+
+  if (!hasPushNotificationsTable) {
+    return;
+  }
+
+  const hasSegmentColumn = await knex.schema.hasColumn('push_notifications', 'segment');
+
+  if (!hasSegmentColumn) {
+    return;
+  }
+
   // Unwrap single-item arrays back to plain text (best-effort rollback).
   await knex.raw(`
     UPDATE push_notifications
