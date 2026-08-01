@@ -1,4 +1,7 @@
 module.exports = ({ env }) => ({
+  'export-import-kkm': {
+    enabled: false,
+  },
   email: {
     config: {
       provider: 'sendgrid',

@@ -31,7 +31,7 @@ export interface TableTransportShuttlesTableRow extends Struct.ComponentSchema {
 }
 
 declare module '@strapi/strapi' {
-  export module Public {
+  export namespace Public {
     export interface ComponentSchemas {
       'table.table-row': TableTableRow;
       'table.transport-shuttles-table-row': TableTransportShuttlesTableRow;
