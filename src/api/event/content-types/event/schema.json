@@ -25,6 +25,10 @@
     },
     "schedule_entity_id": {
       "type": "string"
+    },
+    "hotel_choices_number": {
+      "type": "integer",
+      "default": 3
     }
   }
 }

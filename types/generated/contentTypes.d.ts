@@ -923,6 +923,8 @@ export interface ApiEventEvent extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     end_date: Schema.Attribute.Date;
+    hotel_choices_number: Schema.Attribute.Integer &
+      Schema.Attribute.DefaultTo<3>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::event.event'> &
       Schema.Attribute.Private;
