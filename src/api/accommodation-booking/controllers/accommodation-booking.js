@@ -172,6 +172,7 @@ module.exports = factories.createCoreController(
                 return {
                     booking_option_choice: pair.choice,
                     room_type: roomType,
+                    board_basis: roomTypeLink?.board_basis || "",
                     room_count,
                     room_cost,
                     total_cost,
