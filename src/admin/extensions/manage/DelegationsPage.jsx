@@ -552,7 +552,7 @@ const DelegationsPage = () => {
                                     style={{ display: 'block', marginTop: '8px', background: '#32324d', border: '1px solid #4945ff', borderRadius: '4px', color: '#eaeaef', fontSize: '11px', padding: '5px 8px', cursor: photoDownloadState[m.documentId] === 'loading' ? 'default' : 'pointer', opacity: photoDownloadState[m.documentId] === 'loading' ? 0.6 : 1, whiteSpace: 'nowrap' }}
                                     title="Download the original image and all available image sizes"
                                   >
-                                    {photoDownloadState[m.documentId] === 'loading' ? 'Downloading...' : photoDownloadState[m.documentId] === 'success' ? 'Downloaded' : 'Download sizes'}
+                                    {photoDownloadState[m.documentId] === 'loading' ? 'Downloading...' : photoDownloadState[m.documentId] === 'success' ? 'Downloaded' : 'Download'}
                                   </button>
                                 </div>
                               )}
