@@ -70,7 +70,7 @@
     "hotel_room_inventories": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::hotel-room-inventory.hotel-room-inventory",
+      "target": "api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory",
       "mappedBy": "accommodation_hotel"
     }
   }

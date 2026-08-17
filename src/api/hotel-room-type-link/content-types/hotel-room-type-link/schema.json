@@ -33,6 +33,7 @@
     "board_basis": {
       "type": "enumeration",
       "enum": [
+        "Room Only",
         "Bed & Breakfast",
         "Half Board",
         "Full Board"
@@ -41,7 +42,7 @@
     "hotel_room_inventory": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::hotel-room-inventory.hotel-room-inventory",
+      "target": "api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory",
       "inversedBy": "hotel_room_type_links"
     }
   }

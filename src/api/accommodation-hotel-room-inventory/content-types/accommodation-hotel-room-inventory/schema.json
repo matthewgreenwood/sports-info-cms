@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "hotel_room_inventories",
+  "collectionName": "accommodation_hotel_room_inventories",
   "info": {
-    "singularName": "hotel-room-inventory",
-    "pluralName": "hotel-room-inventories",
-    "displayName": "Hotel Room Inventory"
+    "singularName": "accommodation-hotel-room-inventory",
+    "pluralName": "accommodation-hotel-room-inventories",
+    "displayName": "Accommodation Hotel Room Inventory"
   },
   "options": {
     "draftAndPublish": true
