@@ -543,7 +543,7 @@ export interface ApiAccommodationHotelAccommodationHotel
       'api::hotel-room-type-link.hotel-room-type-link'
     >;
     hotel_type: Schema.Attribute.Enumeration<
-      ['FIG & Delegations', 'Delegations', 'Judges']
+      ['IF', 'IF & Delegations', 'Delegations', 'Officials', 'LOC', 'Media']
     >;
     hotel_website: Schema.Attribute.Text;
     image: Schema.Attribute.Media<

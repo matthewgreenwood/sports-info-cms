@@ -17,9 +17,12 @@
     "hotel_type": {
       "type": "enumeration",
       "enum": [
-        "FIG & Delegations",
+        "IF",
+        "IF & Delegations",
         "Delegations",
-        "Judges"
+        "Officials",
+        "LOC",
+        "Media"
       ]
     },
     "hotel_category": {
