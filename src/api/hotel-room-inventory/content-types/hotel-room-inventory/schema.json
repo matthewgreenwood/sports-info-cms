@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hotel_room_inventories",
+  "info": {
+    "singularName": "hotel-room-inventory",
+    "pluralName": "hotel-room-inventories",
+    "displayName": "Hotel Room Inventory"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Description": {
+      "type": "string"
+    },
+    "accommodation_hotel": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::accommodation-hotel.accommodation-hotel",
+      "inversedBy": "hotel_room_inventories"
+    },
+    "accommodation_room_type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::accommodation-room-type.accommodation-room-type",
+      "inversedBy": "hotel_room_inventories"
+    },
+    "total_rooms": {
+      "type": "integer"
+    },
+    "hotel_room_type_links": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hotel-room-type-link.hotel-room-type-link",
+      "mappedBy": "hotel_room_inventory"
+    }
+  }
+}

@@ -66,6 +66,12 @@
       "relation": "oneToMany",
       "target": "api::hotel-room-type-link.hotel-room-type-link",
       "mappedBy": "accommodation_hotel"
+    },
+    "hotel_room_inventories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::hotel-room-inventory.hotel-room-inventory",
+      "mappedBy": "accommodation_hotel"
     }
   }
 }

@@ -30,11 +30,19 @@
       "type": "decimal",
       "default": 0
     },
-    "total_rooms": {
-      "type": "integer"
+    "board_basis": {
+      "type": "enumeration",
+      "enum": [
+        "Bed & Breakfast",
+        "Half Board",
+        "Full Board"
+      ]
     },
-    "total_rooms_allocated": {
-      "type": "integer"
+    "hotel_room_inventory": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::hotel-room-inventory.hotel-room-inventory",
+      "inversedBy": "hotel_room_type_links"
     }
   }
 }

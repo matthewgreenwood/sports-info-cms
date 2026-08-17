@@ -222,7 +222,7 @@ const HotelDashboardPage = () => {
     setLoading(true);
     Promise.all([
       get('/content-manager/collection-types/api::accommodation-hotel.accommodation-hotel?pageSize=100&sort=hotel_name:asc'),
-      get('/content-manager/collection-types/api::hotel-room-type-link.hotel-room-type-link?pageSize=500&sort=Description:asc&populate[accommodation_hotel]=*&populate[accommodation_room_type]=*'),
+      get('/content-manager/collection-types/api::hotel-room-type-link.hotel-room-type-link?pageSize=500&sort=Description:asc&populate[accommodation_hotel]=*&populate[accommodation_room_type]=*&populate[hotel_room_inventory]=*'),
       get('/content-manager/collection-types/api::accommodation-booking.accommodation-booking?pageSize=1000&fields[0]=booking_status&fields[1]=booking_reference_room&fields[2]=booking_country&fields[3]=booking_submitted_by&fields[4]=booking_submitted_by_email&fields[5]=booking_check_in_date&fields[6]=booking_check_out_date&fields[7]=booking_accessible_room&fields[8]=booking_notes&fields[9]=createdAt&fields[10]=updatedAt&populate[booking_allocated_hotel]=id,hotel_name&populate[booking_requested_hotel_room_type][populate][accommodation_hotel]=id,hotel_name&populate[booking_requested_hotel_room_type][populate][accommodation_room_type]=id,people_per_room&populate[booking_allocated_members][fields][0]=country&populate[booking_allocated_members][fields][1]=surname&populate[booking_allocated_members][fields][2]=first_name&populate[createdBy]=firstname,lastname,email&populate[updatedBy]=firstname,lastname,email'),
     ])
       .then(([hotelsRes, roomTypesRes, bookingsRes]) => {
@@ -395,6 +395,17 @@ const HotelDashboardPage = () => {
                   const roomBookings = allocatedBookings.filter(
                     (b) => b.booking_requested_hotel_room_type?.id === rt.id
                   );
+                  // Board-basis links (B&B / Half Board / Full Board) can share the same physical
+                  // room inventory, so total/available must be computed across every sibling link
+                  // that draws from the same inventory record, not just this one.
+                  const inventoryId = rt.hotel_room_inventory?.id;
+                  const siblingIds = inventoryId != null
+                    ? linkedRoomTypes.filter((r) => r.hotel_room_inventory?.id === inventoryId).map((r) => r.id)
+                    : [rt.id];
+                  const pooledBookingsCount = allocatedBookings.filter(
+                    (b) => siblingIds.includes(b.booking_requested_hotel_room_type?.id)
+                  ).length;
+                  const totalRooms = rt.hotel_room_inventory?.total_rooms ?? null;
                   const isOpen = expandedRoomTypes.has(rt.id);
                   return (
                     <div key={rt.id} style={{ border: '1px solid #32324d', borderRadius: '4px', overflow: 'hidden' }}>
@@ -421,15 +432,15 @@ const HotelDashboardPage = () => {
                           )}
                           <span style={{ color: '#c0c0cf', fontSize: '12px' }}>
                             <span style={{ color: '#6b7280' }}>Total Rooms: </span>
-                            <span style={{ fontWeight: '600' }}>{rt.total_rooms ?? '—'}</span>
+                            <span style={{ fontWeight: '600' }}>{totalRooms ?? '—'}</span>
                           </span>
                           <span style={{ color: '#7b79ff', fontSize: '12px', fontWeight: '600' }}>
                             {roomBookings.length} booked
                           </span>
                           <span style={{ color: '#c0c0cf', fontSize: '12px' }}>
                             <span style={{ color: '#6b7280' }}>Rooms Available: </span>
-                            <span style={{ fontWeight: '600', color: rt.total_rooms != null ? ((rt.total_rooms - roomBookings.length) > 0 ? '#22c55e' : '#ee5e52') : '#c0c0cf' }}>
-                              {rt.total_rooms != null ? rt.total_rooms - roomBookings.length : '—'}
+                            <span style={{ fontWeight: '600', color: totalRooms != null ? ((totalRooms - pooledBookingsCount) > 0 ? '#22c55e' : '#ee5e52') : '#c0c0cf' }}>
+                              {totalRooms != null ? totalRooms - pooledBookingsCount : '—'}
                             </span>
                           </span>
                         </div>

@@ -80,9 +80,11 @@ const ManageAccommodationPage = () => {
   // booking_status options — kept in sync with the schema enum
   const FALLBACK_STATUS_OPTIONS = ['Pending', 'Allocated', 'Confirmed', 'Declined', 'Waiting List', 'Other Option Allocated', 'Redundant', 'Cancelled'];
 
-  // Fetch hotel-room-type-link records for the editable dropdown (with hotel and room type populated)
+  // Fetch hotel-room-type-link records for the editable dropdown (with hotel, room type
+  // and the shared room inventory populated — several board-basis links can point at the
+  // same inventory record, so capacity checks must be keyed off the inventory, not the link)
   useEffect(() => {
-    get('/content-manager/collection-types/api::hotel-room-type-link.hotel-room-type-link?pageSize=500&sort=Description:asc&populate[accommodation_hotel]=*&populate[accommodation_room_type]=*')
+    get('/content-manager/collection-types/api::hotel-room-type-link.hotel-room-type-link?pageSize=500&sort=Description:asc&populate[accommodation_hotel]=*&populate[accommodation_room_type]=*&populate[hotel_room_inventory]=*')
       .then(({ data }) => setAllRoomTypes(data?.results ?? data?.data ?? []))
       .catch(() => {});
   }, []);
@@ -186,42 +188,60 @@ const ManageAccommodationPage = () => {
       const previewData = { toAllocate, toOther, hotelName };
 
       // ── Capacity check ────────────────────────────────────────────────────
-      // Count how many bookings per room-type-link are being newly set to Allocated
+      // Multiple board-basis room-type-links (B&B / Half Board / Full Board) can share
+      // the same physical room inventory, so capacity must be checked per inventory
+      // record, aggregating bookings across every link that draws from it. Links without
+      // an inventory assigned yet (not migrated) fall back to checking themselves alone.
+      const getInventoryKey = (rtId) => {
+        const rtLink = allRoomTypes.find((r) => String(r.id) === String(rtId));
+        const invId = rtLink?.hotel_room_inventory?.id;
+        return invId != null ? `inv:${invId}` : `link:${rtId}`;
+      };
+      const siblingLinkIdsForKey = (key) =>
+        allRoomTypes.filter((r) => getInventoryKey(r.id) === key).map((r) => r.id);
+
+      // Count how many bookings per inventory key are being newly set to Allocated
       // (exclude those already Allocated or Confirmed — they're already counted in existing totals)
       const roomTypeNewCount = {};
       for (const b of toAllocate) {
         const rtId = String(b.booking_requested_hotel_room_type?.id ?? '');
         if (!rtId) continue;
         if (b.booking_status === 'Allocated' || b.booking_status === 'Confirmed') continue;
-        roomTypeNewCount[rtId] = (roomTypeNewCount[rtId] ?? 0) + 1;
+        const key = getInventoryKey(rtId);
+        roomTypeNewCount[key] = (roomTypeNewCount[key] ?? 0) + 1;
       }
 
       const roomTypeIdsToCheck = Object.keys(roomTypeNewCount);
       const overCapacity = [];
 
       if (roomTypeIdsToCheck.length > 0) {
-        // For each room type, query all existing Allocated+Confirmed bookings to calculate availability
+        // For each inventory key, query all existing Allocated+Confirmed bookings across every
+        // sibling link that shares it to calculate availability
         const countResults = await Promise.all(
-          roomTypeIdsToCheck.map(async (rtId) => {
+          roomTypeIdsToCheck.map(async (key) => {
+            const siblingIds = siblingLinkIdsForKey(key);
+            const filterParams = siblingIds
+              .map((id, i) => `filters[booking_requested_hotel_room_type][id][$in][${i}]=${id}`)
+              .join('&');
             const { data } = await get(
-              `/content-manager/collection-types/api::accommodation-booking.accommodation-booking?pageSize=2000&fields[0]=booking_status&filters[booking_requested_hotel_room_type][id][$eq]=${rtId}`
+              `/content-manager/collection-types/api::accommodation-booking.accommodation-booking?pageSize=2000&fields[0]=booking_status&${filterParams}`
             );
             const existingBookings = data?.results ?? data?.data ?? [];
             const existingCount = existingBookings.filter(
               (b) => b.booking_status === 'Allocated' || b.booking_status === 'Confirmed'
             ).length;
-            const rtLink = allRoomTypes.find((r) => String(r.id) === String(rtId));
-            const totalRooms = rtLink?.total_rooms ?? 0;
+            const rtLink = allRoomTypes.find((r) => siblingIds.includes(r.id));
+            const totalRooms = rtLink?.hotel_room_inventory?.total_rooms ?? 0;
             const available = totalRooms - existingCount;
-            const newAllocating = roomTypeNewCount[rtId];
-            return { rtId, rtLink, totalRooms, existingCount, available, newAllocating };
+            const newAllocating = roomTypeNewCount[key];
+            return { key, rtLink, totalRooms, existingCount, available, newAllocating };
           })
         );
 
         for (const result of countResults) {
           if (result.newAllocating > result.available) {
             overCapacity.push({
-              roomTypeName: result.rtLink?.Description ?? `Room Type ${result.rtId}`,
+              roomTypeName: result.rtLink?.hotel_room_inventory?.Description ?? result.rtLink?.Description ?? `Room Type ${result.key}`,
               totalRooms: result.totalRooms,
               existingCount: result.existingCount,
               newAllocating: result.newAllocating,

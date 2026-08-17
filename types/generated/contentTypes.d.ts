@@ -538,6 +538,10 @@ export interface ApiAccommodationHotelAccommodationHotel
     currency: Schema.Attribute.Enumeration<['CHF', 'Euro', 'GBP', 'USD']>;
     hotel_category: Schema.Attribute.Enumeration<['One', 'Two', 'Three']>;
     hotel_name: Schema.Attribute.String;
+    hotel_room_inventories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-room-inventory.hotel-room-inventory'
+    >;
     hotel_room_type_links: Schema.Attribute.Relation<
       'oneToMany',
       'api::hotel-room-type-link.hotel-room-type-link'
@@ -579,6 +583,10 @@ export interface ApiAccommodationRoomTypeAccommodationRoomType
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    hotel_room_inventories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-room-inventory.hotel-room-inventory'
+    >;
     hotel_room_type_links: Schema.Attribute.Relation<
       'oneToMany',
       'api::hotel-room-type-link.hotel-room-type-link'
@@ -960,6 +968,48 @@ export interface ApiFeedbackFeedback extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiHotelRoomInventoryHotelRoomInventory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'hotel_room_inventories';
+  info: {
+    displayName: 'Hotel Room Inventory';
+    pluralName: 'hotel-room-inventories';
+    singularName: 'hotel-room-inventory';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    accommodation_hotel: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::accommodation-hotel.accommodation-hotel'
+    >;
+    accommodation_room_type: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::accommodation-room-type.accommodation-room-type'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.String;
+    hotel_room_type_links: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-room-type-link.hotel-room-type-link'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-room-inventory.hotel-room-inventory'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    total_rooms: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
   extends Struct.CollectionTypeSchema {
   collectionName: 'hotel_room_type_links';
@@ -980,10 +1030,17 @@ export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
       'manyToOne',
       'api::accommodation-room-type.accommodation-room-type'
     >;
+    board_basis: Schema.Attribute.Enumeration<
+      ['Bed & Breakfast', 'Half Board', 'Full Board']
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     Description: Schema.Attribute.String;
+    hotel_room_inventory: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::hotel-room-inventory.hotel-room-inventory'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -993,8 +1050,6 @@ export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
     publishedAt: Schema.Attribute.DateTime;
     room_cost_per_person: Schema.Attribute.Decimal &
       Schema.Attribute.DefaultTo<0>;
-    total_rooms: Schema.Attribute.Integer;
-    total_rooms_allocated: Schema.Attribute.Integer;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -2373,6 +2428,7 @@ declare module '@strapi/strapi' {
       'api::emergency-contact.emergency-contact': ApiEmergencyContactEmergencyContact;
       'api::event.event': ApiEventEvent;
       'api::feedback.feedback': ApiFeedbackFeedback;
+      'api::hotel-room-inventory.hotel-room-inventory': ApiHotelRoomInventoryHotelRoomInventory;
       'api::hotel-room-type-link.hotel-room-type-link': ApiHotelRoomTypeLinkHotelRoomTypeLink;
       'api::information-medical.information-medical': ApiInformationMedicalInformationMedical;
       'api::information-news-item.information-news-item': ApiInformationNewsItemInformationNewsItem;
