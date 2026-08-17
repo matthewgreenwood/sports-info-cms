@@ -2,8 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useFetchClient } from '@strapi/strapi/admin';
 import * as XLSX from 'xlsx';
 
+const EMPTY_TRAVEL_FORM = {
+  arrival_date: '',
+  arrival_time: '',
+  arrival_location: '',
+  arrival_flight_number: '',
+  arrival_notes: '',
+  departure_date: '',
+  departure_time: '',
+  departure_location: '',
+  departure_flight_number: '',
+  departure_pick_up_time: '',
+  departure_pick_up_location: '',
+  departure_notes: '',
+};
+
 const ManageTravelPage = () => {
-  const { get } = useFetchClient();
+  const { get, post } = useFetchClient();
 
   const [allRecords, setAllRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +40,13 @@ const ManageTravelPage = () => {
   const [membersError, setMembersError] = useState(null);
   const [missingFilterCountry, setMissingFilterCountry] = useState('');
   const [missingFilterSubmittedBy, setMissingFilterSubmittedBy] = useState('');
+
+  // ── Add travel details modal ───────────────────────────────────────────────
+  const [selectedMissingIds, setSelectedMissingIds] = useState(new Set());
+  const [modalTargets, setModalTargets] = useState([]); // delegation members being edited
+  const [travelForm, setTravelForm] = useState(EMPTY_TRAVEL_FORM);
+  const [savingTravel, setSavingTravel] = useState(false);
+  const [travelMsg, setTravelMsg] = useState(null); // { type, text }
 
   // ── Fetch ──────────────────────────────────────────────────────────────────
   const fetchRecords = () => {
@@ -69,6 +91,76 @@ const ManageTravelPage = () => {
       if (next.has(id)) { next.delete(id); } else { next.add(id); }
       return next;
     });
+  };
+
+  const toggleMissingSelect = (docId) => {
+    setSelectedMissingIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(docId)) { next.delete(docId); } else { next.add(docId); }
+      return next;
+    });
+  };
+
+  const openTravelModal = (members) => {
+    setModalTargets(members);
+    setTravelForm(EMPTY_TRAVEL_FORM);
+    setTravelMsg(null);
+  };
+
+  const closeTravelModal = () => {
+    setModalTargets([]);
+    setTravelForm(EMPTY_TRAVEL_FORM);
+    setTravelMsg(null);
+  };
+
+  const handleSubmitTravelDetails = async () => {
+    if (modalTargets.length === 0 || savingTravel) return;
+    setSavingTravel(true);
+    setTravelMsg(null);
+    const f = travelForm;
+    const shared = {
+      arrival_date: f.arrival_date || null,
+      arrival_time: f.arrival_time ? `${f.arrival_time}:00` : null,
+      arrival_location: f.arrival_location || null,
+      arrival_flight_number: f.arrival_flight_number || null,
+      arrival_notes: f.arrival_notes || null,
+      departure_date: f.departure_date || null,
+      departure_time: f.departure_time ? `${f.departure_time}:00` : null,
+      departure_location: f.departure_location || null,
+      departure_flight_number: f.departure_flight_number || null,
+      departure_pick_up_time: f.departure_pick_up_time ? `${f.departure_pick_up_time}:00` : null,
+      departure_pick_up_location: f.departure_pick_up_location || null,
+      departure_notes: f.departure_notes || null,
+    };
+
+    try {
+      await Promise.all(modalTargets.map(async (m) => {
+        const { data } = await post(
+          '/content-manager/collection-types/api::arrival-departure.arrival-departure',
+          {
+            ...shared,
+            first_name: m.first_name ?? null,
+            surname: m.surname ?? null,
+            travel_details_submitted_by: m.submitted_by ?? null,
+            delegation_member: { connect: [{ id: Number(m.id) }], disconnect: [] },
+          }
+        );
+        const documentId = data?.data?.documentId ?? data?.documentId;
+        if (documentId) {
+          await post(
+            `/content-manager/collection-types/api::arrival-departure.arrival-departure/${documentId}/actions/publish`,
+            {}
+          );
+        }
+      }));
+      setSelectedMissingIds(new Set());
+      closeTravelModal();
+      fetchRecords();
+    } catch {
+      setTravelMsg({ type: 'error', text: 'Save failed. Please try again.' });
+    } finally {
+      setSavingTravel(false);
+    }
   };
 
   const formatDate = (val) => {
@@ -189,6 +281,13 @@ const ManageTravelPage = () => {
     return true;
   });
 
+  const selectedMissingMembers = filteredMissing.filter((m) => selectedMissingIds.has(m.documentId));
+  const allFilteredSelected = filteredMissing.length > 0 && selectedMissingMembers.length === filteredMissing.length;
+
+  const toggleSelectAllMissing = () => {
+    setSelectedMissingIds(allFilteredSelected ? new Set() : new Set(filteredMissing.map((m) => m.documentId)));
+  };
+
   // ── Styles ─────────────────────────────────────────────────────────────────
   const filterSelectStyle = {
     background: '#1e1e2e', border: '1px solid #32324d', borderRadius: '6px',
@@ -199,6 +298,25 @@ const ManageTravelPage = () => {
     background: '#1e1e2e', border: '1px solid #32324d', borderRadius: '6px',
     color: '#fff', fontSize: '13px', padding: '7px 10px', minWidth: '160px', colorScheme: 'dark',
   };
+
+  const modalInputStyle = {
+    background: '#181826', border: '1px solid #32324d', borderRadius: '6px',
+    color: '#fff', fontSize: '13px', padding: '7px 10px', width: '100%',
+    boxSizing: 'border-box', colorScheme: 'dark',
+  };
+
+  // Plain render function (not a component) so inputs keep focus between renders
+  const renderModalField = (label, field, type = 'text') => (
+    <div key={field}>
+      <div style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '4px' }}>{label}</div>
+      <input
+        type={type}
+        value={travelForm[field]}
+        onChange={(e) => setTravelForm((prev) => ({ ...prev, [field]: e.target.value }))}
+        style={modalInputStyle}
+      />
+    </div>
+  );
 
   const DetailRow = ({ label, value }) => {
     if (value === null || value === undefined || value === '') return null;
@@ -218,6 +336,21 @@ const ManageTravelPage = () => {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
         <h1 style={{ fontSize: '22px', fontWeight: '700', color: '#fff', margin: 0 }}>Manage Travel</h1>
         <div style={{ display: 'flex', gap: '10px' }}>
+          {view === 'missing' && (
+            <button
+              onClick={() => openTravelModal(selectedMissingMembers)}
+              disabled={selectedMissingMembers.length === 0}
+              style={{
+                background: selectedMissingMembers.length === 0 ? 'none' : '#4945ff',
+                border: selectedMissingMembers.length === 0 ? '1px solid #32324d' : 'none',
+                borderRadius: '6px', color: selectedMissingMembers.length === 0 ? '#6b7280' : '#fff',
+                fontSize: '13px', padding: '8px 16px',
+                cursor: selectedMissingMembers.length === 0 ? 'default' : 'pointer', whiteSpace: 'nowrap',
+              }}
+            >
+              Add Travel Details{selectedMissingMembers.length > 0 ? ` (${selectedMissingMembers.length})` : ''}
+            </button>
+          )}
           <button
             onClick={exportToXlsx}
             disabled={loading || allRecords.length === 0}
@@ -463,32 +596,122 @@ const ManageTravelPage = () => {
               ) : (
                 <div>
                   <div style={{
-                    display: 'grid', gridTemplateColumns: '2fr 2fr 2fr 2fr',
+                    display: 'grid', gridTemplateColumns: '36px 2fr 2fr 2fr 2fr 150px',
                     gap: '8px', padding: '8px 16px', background: '#212134',
                     borderRadius: '6px 6px 0 0', border: '1px solid #32324d', borderBottom: 'none',
+                    alignItems: 'center',
                   }}>
-                    {['Name', 'Country', 'Role', 'Submitted By'].map((h) => (
-                      <div key={h} style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: '600' }}>{h}</div>
+                    <input
+                      type="checkbox"
+                      checked={allFilteredSelected}
+                      onChange={toggleSelectAllMissing}
+                      aria-label="Select all members"
+                      style={{ cursor: 'pointer', width: '15px', height: '15px', accentColor: '#4945ff' }}
+                    />
+                    {['Name', 'Country', 'Role', 'Submitted By', ''].map((h, i) => (
+                      <div key={h || `col-${i}`} style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: '600' }}>{h}</div>
                     ))}
                   </div>
                   {filteredMissing.map((m, idx) => (
                     <div key={m.id ?? m.documentId} style={{
-                      display: 'grid', gridTemplateColumns: '2fr 2fr 2fr 2fr',
+                      display: 'grid', gridTemplateColumns: '36px 2fr 2fr 2fr 2fr 150px',
                       gap: '8px', padding: '12px 16px',
                       border: '1px solid #32324d', borderTop: 'none',
                       borderRadius: idx === filteredMissing.length - 1 ? '0 0 6px 6px' : '0',
                       background: '#1e1e2e', alignItems: 'center',
                     }}>
+                      <input
+                        type="checkbox"
+                        checked={selectedMissingIds.has(m.documentId)}
+                        onChange={() => toggleMissingSelect(m.documentId)}
+                        aria-label={`Select ${m.first_name} ${m.surname}`}
+                        style={{ cursor: 'pointer', width: '15px', height: '15px', accentColor: '#4945ff' }}
+                      />
                       <div style={{ color: '#eaeaef', fontSize: '14px', fontWeight: '500' }}>{m.first_name} {m.surname}</div>
                       <div style={{ color: '#a5a5ba', fontSize: '14px' }}>{m.country || '—'}</div>
                       <div style={{ color: '#a5a5ba', fontSize: '14px' }}>{m.role?.accreditation_role || '—'}</div>
                       <div style={{ color: '#a5a5ba', fontSize: '14px' }}>{m.submitted_by || '—'}</div>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <button
+                          onClick={() => openTravelModal([m])}
+                          style={{ background: 'none', border: '1px solid #4945ff', borderRadius: '4px', color: '#7b79ff', fontSize: '12px', padding: '5px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                        >
+                          Add Travel
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
           )}
+        </div>
+      )}
+
+      {/* ── Add travel details modal ── */}
+      {modalTargets.length > 0 && (
+        <div
+          onClick={closeTravelModal}
+          style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)', zIndex: 1000,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px',
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              background: '#212134', border: '1px solid #32324d', borderRadius: '8px',
+              width: '100%', maxWidth: '760px', maxHeight: '90vh', overflowY: 'auto', padding: '24px',
+            }}
+          >
+            <h2 style={{ fontSize: '18px', fontWeight: '700', color: '#fff', margin: '0 0 6px' }}>Add Travel Details</h2>
+            <p style={{ color: '#a5a5ba', fontSize: '13px', margin: '0 0 20px' }}>
+              {modalTargets.length === 1
+                ? `${modalTargets[0].first_name} ${modalTargets[0].surname}`
+                : `${modalTargets.length} members selected — the same details will be saved for each.`}
+            </p>
+
+            <div style={{ fontSize: '12px', color: '#7b79ff', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: '600', marginBottom: '10px' }}>Arrival</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '22px' }}>
+              {renderModalField('Arrival Date', 'arrival_date', 'date')}
+              {renderModalField('Arrival Time', 'arrival_time', 'time')}
+              {renderModalField('Arrival Location', 'arrival_location')}
+              {renderModalField('Arrival Flight Number', 'arrival_flight_number')}
+              <div style={{ gridColumn: '1 / -1' }}>{renderModalField('Arrival Notes', 'arrival_notes')}</div>
+            </div>
+
+            <div style={{ fontSize: '12px', color: '#7b79ff', textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: '600', marginBottom: '10px' }}>Departure</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', marginBottom: '22px' }}>
+              {renderModalField('Departure Date', 'departure_date', 'date')}
+              {renderModalField('Departure Time', 'departure_time', 'time')}
+              {renderModalField('Departure Location', 'departure_location')}
+              {renderModalField('Departure Flight Number', 'departure_flight_number')}
+              {renderModalField('Pick-up Time', 'departure_pick_up_time', 'time')}
+              {renderModalField('Pick-up Location', 'departure_pick_up_location')}
+              <div style={{ gridColumn: '1 / -1' }}>{renderModalField('Departure Notes', 'departure_notes')}</div>
+            </div>
+
+            {travelMsg && (
+              <p style={{ color: travelMsg.type === 'error' ? '#ee5e52' : '#5cb176', fontSize: '13px', marginBottom: '12px' }}>{travelMsg.text}</p>
+            )}
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button
+                onClick={closeTravelModal}
+                disabled={savingTravel}
+                style={{ background: 'none', border: '1px solid #32324d', borderRadius: '6px', color: '#a5a5ba', fontSize: '13px', padding: '8px 16px', cursor: savingTravel ? 'default' : 'pointer' }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitTravelDetails}
+                disabled={savingTravel}
+                style={{ background: '#4945ff', border: 'none', borderRadius: '6px', color: '#fff', fontSize: '13px', padding: '8px 16px', cursor: savingTravel ? 'default' : 'pointer', opacity: savingTravel ? 0.7 : 1 }}
+              >
+                {savingTravel ? 'Saving…' : 'Submit'}
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
