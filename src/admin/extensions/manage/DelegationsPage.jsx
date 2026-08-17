@@ -28,6 +28,7 @@ const DelegationsPage = () => {
   const [bulkStatus, setBulkStatus] = useState('');
   const [bulkSaving, setBulkSaving] = useState(false);
   const [bulkSaveMsg, setBulkSaveMsg] = useState(null);
+  const [photoDownloadState, setPhotoDownloadState] = useState({});
   const [view, setView] = useState('members'); // 'members' | 'photos'
 
   const fetchAllMembers = () => {
@@ -287,6 +288,43 @@ const DelegationsPage = () => {
     }
   };
 
+  const handleDownloadMemberPhotos = async (member) => {
+    const photo = member.photo;
+    if (!photo) return;
+
+    const photoUrls = [
+      ['original', photo.url],
+      ...Object.entries(photo.formats ?? {}).map(([size, format]) => [size, format?.url]),
+    ].filter(([, url]) => url);
+    const uniquePhotoUrls = [...new Map(photoUrls.map(([size, url]) => [url, [size, url]])).values()];
+    const memberId = member.documentId;
+    const name = `${member.first_name ?? 'member'}-${member.surname ?? 'photo'}`
+      .replace(/[^a-z0-9]+/gi, '-')
+      .replace(/^-|-$/g, '')
+      .toLowerCase();
+
+    setPhotoDownloadState((prev) => ({ ...prev, [memberId]: 'loading' }));
+    try {
+      for (const [size, rawUrl] of uniquePhotoUrls) {
+        const url = rawUrl.startsWith('http') ? rawUrl : window.location.origin + rawUrl;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Unable to download ${size} image.`);
+        const blobUrl = URL.createObjectURL(await response.blob());
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = `${name}-${size}${url.match(/\.[a-z0-9]+(?:\?|$)/i)?.[0].replace('?', '') ?? ''}`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(blobUrl);
+      }
+      setPhotoDownloadState((prev) => ({ ...prev, [memberId]: 'success' }));
+    } catch (err) {
+      setPhotoDownloadState((prev) => ({ ...prev, [memberId]: 'error' }));
+      setDownloadError(err?.message ?? 'Failed to download member photos.');
+    }
+  };
+
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px' }}>
@@ -508,6 +546,14 @@ const DelegationsPage = () => {
                                     alt={`${m.first_name} ${m.surname}`}
                                     style={{ width: '100px', height: '120px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #32324d' }}
                                   />
+                                  <button
+                                    onClick={(e) => { e.stopPropagation(); handleDownloadMemberPhotos(m); }}
+                                    disabled={photoDownloadState[m.documentId] === 'loading'}
+                                    style={{ display: 'block', marginTop: '8px', background: '#32324d', border: '1px solid #4945ff', borderRadius: '4px', color: '#eaeaef', fontSize: '11px', padding: '5px 8px', cursor: photoDownloadState[m.documentId] === 'loading' ? 'default' : 'pointer', opacity: photoDownloadState[m.documentId] === 'loading' ? 0.6 : 1, whiteSpace: 'nowrap' }}
+                                    title="Download the original image and all available image sizes"
+                                  >
+                                    {photoDownloadState[m.documentId] === 'loading' ? 'Downloading...' : photoDownloadState[m.documentId] === 'success' ? 'Downloaded' : 'Download sizes'}
+                                  </button>
                                 </div>
                               )}
                             <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 32px' }}>
