@@ -20,7 +20,7 @@
 const { createStrapi, compileStrapi } = require('@strapi/strapi');
 
 const LINK_UID = 'api::hotel-room-type-link.hotel-room-type-link';
-const INVENTORY_UID = 'api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory';
+const INVENTORY_UID = 'api::hotel-room-inventory.hotel-room-inventory';
 
 function inferBoardBasis(description) {
   const text = (description || '').toLowerCase();

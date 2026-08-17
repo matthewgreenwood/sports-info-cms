@@ -519,48 +519,6 @@ export interface ApiAccommodationBookingAccommodationBooking
   };
 }
 
-export interface ApiAccommodationHotelRoomInventoryAccommodationHotelRoomInventory
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'accommodation_hotel_room_inventories';
-  info: {
-    displayName: 'Accommodation Hotel Room Inventory';
-    pluralName: 'accommodation-hotel-room-inventories';
-    singularName: 'accommodation-hotel-room-inventory';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    accommodation_hotel: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::accommodation-hotel.accommodation-hotel'
-    >;
-    accommodation_room_type: Schema.Attribute.Relation<
-      'manyToOne',
-      'api::accommodation-room-type.accommodation-room-type'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    Description: Schema.Attribute.String;
-    hotel_room_type_links: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::hotel-room-type-link.hotel-room-type-link'
-    >;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    total_rooms: Schema.Attribute.Integer;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiAccommodationHotelAccommodationHotel
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_hotels';
@@ -582,7 +540,7 @@ export interface ApiAccommodationHotelAccommodationHotel
     hotel_name: Schema.Attribute.String;
     hotel_room_inventories: Schema.Attribute.Relation<
       'oneToMany',
-      'api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory'
+      'api::hotel-room-inventory.hotel-room-inventory'
     >;
     hotel_room_type_links: Schema.Attribute.Relation<
       'oneToMany',
@@ -627,7 +585,7 @@ export interface ApiAccommodationRoomTypeAccommodationRoomType
       Schema.Attribute.Private;
     hotel_room_inventories: Schema.Attribute.Relation<
       'oneToMany',
-      'api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory'
+      'api::hotel-room-inventory.hotel-room-inventory'
     >;
     hotel_room_type_links: Schema.Attribute.Relation<
       'oneToMany',
@@ -1010,6 +968,48 @@ export interface ApiFeedbackFeedback extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiHotelRoomInventoryHotelRoomInventory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'hotel_room_inventories';
+  info: {
+    displayName: 'Accommodation Hotel Room Inventory';
+    pluralName: 'hotel-room-inventories';
+    singularName: 'hotel-room-inventory';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    accommodation_hotel: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::accommodation-hotel.accommodation-hotel'
+    >;
+    accommodation_room_type: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::accommodation-room-type.accommodation-room-type'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Description: Schema.Attribute.String;
+    hotel_room_type_links: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-room-type-link.hotel-room-type-link'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::hotel-room-inventory.hotel-room-inventory'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    total_rooms: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
   extends Struct.CollectionTypeSchema {
   collectionName: 'hotel_room_type_links';
@@ -1039,7 +1039,7 @@ export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
     Description: Schema.Attribute.String;
     hotel_room_inventory: Schema.Attribute.Relation<
       'manyToOne',
-      'api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory'
+      'api::hotel-room-inventory.hotel-room-inventory'
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -2416,7 +2416,6 @@ declare module '@strapi/strapi' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::accommodation-booking.accommodation-booking': ApiAccommodationBookingAccommodationBooking;
-      'api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory': ApiAccommodationHotelRoomInventoryAccommodationHotelRoomInventory;
       'api::accommodation-hotel.accommodation-hotel': ApiAccommodationHotelAccommodationHotel;
       'api::accommodation-room-type.accommodation-room-type': ApiAccommodationRoomTypeAccommodationRoomType;
       'api::accreditation-role.accreditation-role': ApiAccreditationRoleAccreditationRole;
@@ -2429,6 +2428,7 @@ declare module '@strapi/strapi' {
       'api::emergency-contact.emergency-contact': ApiEmergencyContactEmergencyContact;
       'api::event.event': ApiEventEvent;
       'api::feedback.feedback': ApiFeedbackFeedback;
+      'api::hotel-room-inventory.hotel-room-inventory': ApiHotelRoomInventoryHotelRoomInventory;
       'api::hotel-room-type-link.hotel-room-type-link': ApiHotelRoomTypeLinkHotelRoomTypeLink;
       'api::information-medical.information-medical': ApiInformationMedicalInformationMedical;
       'api::information-news-item.information-news-item': ApiInformationNewsItemInformationNewsItem;

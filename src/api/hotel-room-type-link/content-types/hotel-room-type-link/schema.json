@@ -42,7 +42,7 @@
     "hotel_room_inventory": {
       "type": "relation",
       "relation": "manyToOne",
-      "target": "api::accommodation-hotel-room-inventory.accommodation-hotel-room-inventory",
+      "target": "api::hotel-room-inventory.hotel-room-inventory",
       "inversedBy": "hotel_room_type_links"
     }
   }
