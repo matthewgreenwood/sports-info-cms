@@ -11,10 +11,18 @@ const HotelDashboardPage = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [expandedHotelIds, setExpandedHotelIds] = useState(new Set());
   const [expandedRoomTypes, setExpandedRoomTypes] = useState(new Set());
   const [dailyModal, setDailyModal] = useState(null); // null or { hotel, linkedRoomTypes, allocatedBookings }
   const [exportingHotelId, setExportingHotelId] = useState(null);
   const [roomingListHotelId, setRoomingListHotelId] = useState(null);
+
+  const toggleHotel = (id) =>
+    setExpandedHotelIds((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
 
   const toggleRoomType = (id) =>
     setExpandedRoomTypes((prev) => {
@@ -320,6 +328,10 @@ const HotelDashboardPage = () => {
 
       {hotelStats.map(({ hotel, linkedRoomTypes, allocatedBookings, requestedBookings, statusCounts }) => (
         <div key={hotel.id} style={cardStyle}>
+          {(() => {
+            const isHotelOpen = expandedHotelIds.has(hotel.id);
+            return (
+              <>
           {/* Hotel name */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
             <h2 style={{ fontSize: '17px', fontWeight: '700', color: '#fff', margin: 0 }}>
@@ -331,6 +343,16 @@ const HotelDashboardPage = () => {
                   {hotel.currency}
                 </span>
               )}
+              <button
+                type="button"
+                onClick={() => toggleHotel(hotel.id)}
+                aria-expanded={isHotelOpen}
+                aria-label={`${isHotelOpen ? 'Collapse' : 'Expand'} ${hotel.hotel_name}`}
+                title={`${isHotelOpen ? 'Collapse' : 'Expand'} hotel details`}
+                style={{ background: 'none', border: '1px solid #32324d', borderRadius: '4px', color: '#a5a5ba', fontSize: '16px', lineHeight: 1, padding: '4px 8px', cursor: 'pointer' }}
+              >
+                {isHotelOpen ? '▾' : '▸'}
+              </button>
               <button
                 onClick={() => setDailyModal({ hotel, linkedRoomTypes, allocatedBookings })}
                 style={{ background: 'none', border: '1px solid #4945ff', borderRadius: '4px', color: '#7b79ff', fontSize: '12px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}
@@ -354,6 +376,8 @@ const HotelDashboardPage = () => {
             </div>
           </div>
 
+          {isHotelOpen && (
+            <>
           {/* Summary stats */}
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '16px' }}>
             <div style={statBoxStyle}>
@@ -481,6 +505,11 @@ const HotelDashboardPage = () => {
               </div>
             </div>
           )}
+            </>
+          )}
+              </>
+            );
+          })()}
         </div>
       ))}
 
