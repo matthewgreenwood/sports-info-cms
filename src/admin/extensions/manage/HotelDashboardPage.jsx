@@ -334,15 +334,7 @@ const HotelDashboardPage = () => {
               <>
           {/* Hotel name */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-            <h2 style={{ fontSize: '17px', fontWeight: '700', color: '#fff', margin: 0 }}>
-              {hotel.hotel_name}
-            </h2>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              {hotel.currency && (
-                <span style={{ fontSize: '12px', color: '#8e8ea0', background: '#181826', border: '1px solid #32324d', borderRadius: '4px', padding: '3px 8px' }}>
-                  {hotel.currency}
-                </span>
-              )}
               <button
                 type="button"
                 onClick={() => toggleHotel(hotel.id)}
@@ -353,6 +345,16 @@ const HotelDashboardPage = () => {
               >
                 {isHotelOpen ? '▾' : '▸'}
               </button>
+              <h2 style={{ fontSize: '17px', fontWeight: '700', color: '#fff', margin: 0 }}>
+                {hotel.hotel_name}
+              </h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              {hotel.currency && (
+                <span style={{ fontSize: '12px', color: '#8e8ea0', background: '#181826', border: '1px solid #32324d', borderRadius: '4px', padding: '3px 8px' }}>
+                  {hotel.currency}
+                </span>
+              )}
               <button
                 onClick={() => setDailyModal({ hotel, linkedRoomTypes, allocatedBookings })}
                 style={{ background: 'none', border: '1px solid #4945ff', borderRadius: '4px', color: '#7b79ff', fontSize: '12px', padding: '4px 10px', cursor: 'pointer', whiteSpace: 'nowrap' }}
