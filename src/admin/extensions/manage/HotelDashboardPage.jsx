@@ -176,6 +176,8 @@ const HotelDashboardPage = () => {
             .join(', ');
 
           roomingRows.push({
+            booking_reference_submission: b.booking_reference_submission ?? '',
+            booking_reference_room: b.booking_reference_room ?? '',
             country: member.country ?? '',
             surname: member.surname ?? '',
             first_name: member.first_name ?? '',
@@ -195,13 +197,15 @@ const HotelDashboardPage = () => {
         return 0;
       });
 
-      const COLUMNS = ['country', 'surname', 'first_name', 'room_type', 'check_in_date', 'check_out_date', 'Sharing With'];
+      const COLUMNS = ['booking_reference_submission', 'booking_reference_room', 'country', 'surname', 'first_name', 'room_type', 'check_in_date', 'check_out_date', 'Sharing With'];
       const roomingSheetData = [
         COLUMNS,
         ...roomingRows.map((row) => COLUMNS.map((col) => row[col] ?? '')),
       ];
       const ws = XLSX.utils.aoa_to_sheet(roomingSheetData);
       ws['!cols'] = [
+        { wch: 24 }, // booking_reference_submission
+        { wch: 24 }, // booking_reference_room
         { wch: 20 }, // country
         { wch: 22 }, // surname
         { wch: 22 }, // first_name
@@ -231,7 +235,7 @@ const HotelDashboardPage = () => {
     Promise.all([
       get('/content-manager/collection-types/api::accommodation-hotel.accommodation-hotel?pageSize=100&sort=hotel_name:asc'),
       get('/content-manager/collection-types/api::hotel-room-type-link.hotel-room-type-link?pageSize=500&sort=Description:asc&populate[accommodation_hotel]=*&populate[accommodation_room_type]=*&populate[hotel_room_inventory]=*'),
-      get('/content-manager/collection-types/api::accommodation-booking.accommodation-booking?pageSize=1000&fields[0]=booking_status&fields[1]=booking_reference_room&fields[2]=booking_country&fields[3]=booking_submitted_by&fields[4]=booking_submitted_by_email&fields[5]=booking_check_in_date&fields[6]=booking_check_out_date&fields[7]=booking_accessible_room&fields[8]=booking_notes&fields[9]=createdAt&fields[10]=updatedAt&populate[booking_allocated_hotel]=id,hotel_name&populate[booking_requested_hotel_room_type][populate][accommodation_hotel]=id,hotel_name&populate[booking_requested_hotel_room_type][populate][accommodation_room_type]=id,people_per_room&populate[booking_allocated_members][fields][0]=country&populate[booking_allocated_members][fields][1]=surname&populate[booking_allocated_members][fields][2]=first_name&populate[createdBy]=firstname,lastname,email&populate[updatedBy]=firstname,lastname,email'),
+      get('/content-manager/collection-types/api::accommodation-booking.accommodation-booking?pageSize=1000&fields[0]=booking_status&fields[1]=booking_reference_room&fields[2]=booking_country&fields[3]=booking_submitted_by&fields[4]=booking_submitted_by_email&fields[5]=booking_check_in_date&fields[6]=booking_check_out_date&fields[7]=booking_accessible_room&fields[8]=booking_notes&fields[9]=createdAt&fields[10]=updatedAt&fields[11]=booking_reference_submission&populate[booking_allocated_hotel]=id,hotel_name&populate[booking_requested_hotel_room_type][populate][accommodation_hotel]=id,hotel_name&populate[booking_requested_hotel_room_type][populate][accommodation_room_type]=id,people_per_room&populate[booking_allocated_members][fields][0]=country&populate[booking_allocated_members][fields][1]=surname&populate[booking_allocated_members][fields][2]=first_name&populate[createdBy]=firstname,lastname,email&populate[updatedBy]=firstname,lastname,email'),
     ])
       .then(([hotelsRes, roomTypesRes, bookingsRes]) => {
         setHotels(hotelsRes.data?.results ?? hotelsRes.data?.data ?? []);
