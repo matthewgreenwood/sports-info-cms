@@ -50,20 +50,21 @@ module.exports = {
   async afterUpdate(event) {
     const { result, params } = event;
 
-    // If publishedAt is set, this afterUpdate was fired BY a publish operation
-    // (CM publish or our own documents.publish()). Running autoPublish here
-    // would race with the in-progress publish and cause duplicate key errors
-    // on relation link tables (e.g. arrivals_departures_delegation_member_lnk).
-    // The _publishingDocIds guard also catches our own recursive calls, but
-    // this check is needed to catch CM-initiated publishes.
+    // Avoid auto-publishing on every update. Publishing a document after a normal
+    // user update can re-trigger relation writes for child records and causes the
+    // duplicate-key errors seen on arrivals_departures_delegation_member_lnk.
+    // The content manager can still publish explicitly when needed, and the
+    // initial create hook keeps the immediate publish behavior for newly-added rows.
     if (result.publishedAt) {
       return;
     }
 
-    // Auto-publish deferred to next tick to avoid nested transaction issues.
-    // Placed before visa logic so early returns below do not skip it.
+    // Skip automatic publish on update to prevent duplicate relation inserts.
+    // The document may still be published manually from the Strapi admin.
     if (result.documentId) {
-      setImmediate(() => autoPublish(result.documentId, "afterUpdate"));
+      strapi.log.info(
+        `[afterUpdate] Skipping auto-publish for delegation member ${result.documentId} (manual publish only for update flow)`
+      );
     }
 
     // -------------------------------------------------------------------------
