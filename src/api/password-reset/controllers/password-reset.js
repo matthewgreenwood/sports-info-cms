@@ -1,8 +1,9 @@
 "use strict";
 
 const { factories } = require("@strapi/strapi");
-const { v4: uuidv4 } = require("uuid");
 const axios = require("axios");
+
+const generateUuid = async () => (await import("uuid")).v4();
 
 const TOKEN_EXPIRY_HOURS = 1;
 const MIN_PASSWORD_LENGTH = 8;
@@ -39,7 +40,7 @@ module.exports = factories.createCoreController(
             data: { used: true },
           });
 
-        const token = uuidv4();
+        const token = await generateUuid();
         const expiresAt = new Date(
           Date.now() + TOKEN_EXPIRY_HOURS * 60 * 60 * 1000
         );

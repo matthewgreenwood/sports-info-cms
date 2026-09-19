@@ -1,8 +1,9 @@
 "use strict";
 
 const { factories } = require("@strapi/strapi");
-const { v4: uuidv4 } = require("uuid");
 const axios = require("axios");
+
+const generateUuid = async () => (await import("uuid")).v4();
 
 // Minimum password length enforced on account creation
 const MIN_PASSWORD_LENGTH = 8;
@@ -159,7 +160,7 @@ module.exports = factories.createCoreController(
         );
       }
 
-      const newToken = uuidv4();
+      const newToken = await generateUuid();
       const now = new Date();
       const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 

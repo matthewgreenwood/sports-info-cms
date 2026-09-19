@@ -1,7 +1,8 @@
 "use strict";
 
 const axios = require("axios");
-const { v4: uuidv4 } = require("uuid");
+
+const generateUuid = async () => (await import("uuid")).v4();
 
 // ─── SHARED EMAIL SENDER ─────────────────────────────────────────────────────
 const sendInvitationEmail = async (strapi, invitation) => {
@@ -75,7 +76,7 @@ module.exports = {
 
     // If creating directly with Sent status, generate token and timestamps now
     if (event.params.data.invitation_status === "Sent") {
-      const token = uuidv4();
+      const token = await generateUuid();
       const now = new Date();
       const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
       event.params.data.invitation_token = token;
@@ -133,7 +134,7 @@ module.exports = {
     }
 
     // Generate a fresh token and timestamps
-    const token = uuidv4();
+    const token = await generateUuid();
     const now = new Date();
     const expiresAt = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
