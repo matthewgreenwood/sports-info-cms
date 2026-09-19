@@ -117,7 +117,20 @@ const ManageAccommodationPage = () => {
   }, []);
 
   // Derive dropdown options from all bookings
-  const refOptions = unique(allBookings.map((b) => b.booking_reference_submission));
+  // Submission refs are ordered newest-first using the earliest createdAt of each submission group
+  const refOptions = (() => {
+    const firstCreatedAt = new Map();
+    allBookings.forEach((b) => {
+      const ref = b.booking_reference_submission;
+      if (!ref) return;
+      const created = new Date(b.createdAt ?? 0).getTime();
+      const existing = firstCreatedAt.get(ref);
+      if (existing == null || created < existing) firstCreatedAt.set(ref, created);
+    });
+    return [...firstCreatedAt.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([ref]) => ref);
+  })();
   const countryOptions = unique(allBookings.map((b) => b.booking_country));
   const submittedByOptions = unique(allBookings.map((b) => b.booking_submitted_by));
   const roomRefOptions = unique(allBookings.map((b) => b.booking_reference_room));
@@ -936,7 +949,7 @@ const ManageAccommodationPage = () => {
                   {/* Row 5: Room Cost Per Person (from room type) | Cost Per Person | Total Room Cost */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px 32px' }}>
                     <div>
-                      <div style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>Room Cost Per Person (Rate)</div>
+                      <div style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>Room Cost Per Person Per Night</div>
                       {(() => {
                         const rt = allRoomTypes.find((r) => String(r.id) === String(editForm.booking_requested_hotel_room_type));
                         const rate = rt?.room_cost_per_person ?? selectedBooking?.booking_requested_hotel_room_type?.room_cost_per_person;
@@ -948,7 +961,7 @@ const ManageAccommodationPage = () => {
                       })()}
                     </div>
                     <div>
-                      <div style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>Total Cost Per Person</div>
+                      <div style={{ fontSize: '11px', color: '#8e8ea0', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '4px' }}>Total Cost Per Room Per Night</div>
                       <div style={{ background: '#1e1e2e', border: '1px solid #32324d', borderRadius: '6px', padding: '7px 10px', boxSizing: 'border-box', color: '#fff', fontSize: '13px', display: 'flex', justifyContent: 'space-between' }}>
                         {(() => {
                           const rt = allRoomTypes.find((r) => String(r.id) === String(editForm.booking_requested_hotel_room_type));
