@@ -119,7 +119,7 @@ async function handlePushAfterSave(strapi, result) {
   }
 }
 
-export default {
+module.exports = {
   // Capture the current send_push value before the update so we can
   // detect a false → true transition in afterUpdate
   async beforeUpdate(event) {

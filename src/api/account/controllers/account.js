@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   async me(ctx) {
     const user = ctx.state.user;
 

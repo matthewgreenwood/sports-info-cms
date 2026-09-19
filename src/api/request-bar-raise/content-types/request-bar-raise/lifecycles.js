@@ -1,7 +1,7 @@
 
 // Trigger the custom service when the response_sent flag is set to true (file in /services/ask-a--question.js)
 
-export default {
+module.exports = {
   async afterUpdate(event) {
     const { result } = event;
 
