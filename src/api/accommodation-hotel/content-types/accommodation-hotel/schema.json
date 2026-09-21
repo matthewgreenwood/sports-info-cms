@@ -72,6 +72,18 @@
       "relation": "oneToMany",
       "target": "api::hotel-room-inventory.hotel-room-inventory",
       "mappedBy": "accommodation_hotel"
+    },
+    "hotel_address_1": {
+      "type": "string"
+    },
+    "hotel_address_2": {
+      "type": "string"
+    },
+    "hotel_address_3": {
+      "type": "string"
+    },
+    "hotel_postcode": {
+      "type": "string"
     }
   }
 }

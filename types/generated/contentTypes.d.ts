@@ -536,8 +536,12 @@ export interface ApiAccommodationHotelAccommodationHotel
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     currency: Schema.Attribute.Enumeration<['CHF', 'Euro', 'GBP', 'USD']>;
+    hotel_address_1: Schema.Attribute.String;
+    hotel_address_2: Schema.Attribute.String;
+    hotel_address_3: Schema.Attribute.String;
     hotel_category: Schema.Attribute.Enumeration<['One', 'Two', 'Three']>;
     hotel_name: Schema.Attribute.String;
+    hotel_postcode: Schema.Attribute.String;
     hotel_room_inventories: Schema.Attribute.Relation<
       'oneToMany',
       'api::hotel-room-inventory.hotel-room-inventory'
