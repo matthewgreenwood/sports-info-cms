@@ -34,7 +34,43 @@
           "parent": null,
           "name": "Delegations",
           "id": "grp_be3f269a6e0747fab5d8e9e3",
-          "children": []
+          "children": [
+            {
+              "uid": "api::accreditation-role.accreditation-role",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::add-delegation-member.add-delegation-member",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Information",
+          "id": "grp_cc0e72fc25de4cbb83b4b413",
+          "children": [
+            {
+              "uid": "api::information-welcome.information-welcome",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::information-venue.information-venue",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::information-tourist.information-tourist",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::information-news-item.information-news-item",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::information-medical.information-medical",
+              "type": "contentType"
+            }
+          ]
         }
       ]
     },
