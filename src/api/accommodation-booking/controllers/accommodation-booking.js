@@ -89,8 +89,10 @@ module.exports = factories.createCoreController(
 
                 const failedCreates = createResults.filter((r) => !r.success);
                 if (failedCreates.length > 0) {
+                    const failedCount = Number(failedCreates.length);
+                    const totalCount = Number(accommodation_bookings.length);
                     ctx.status = 500;
-                    ctx.body = { success: false, error: `Failed to create ${failedCreates.length} of ${accommodation_bookings.length} entries` };
+                    ctx.body = { success: false, error: `Failed to create ${failedCount} of ${totalCount} entries` };
                     return;
                 }
 
@@ -344,7 +346,7 @@ module.exports = factories.createCoreController(
 
                 ctx.body = {
                     success:            true,
-                    confirmed:          bookings.length,
+                    confirmed:          Number(bookings.length),
                     confirmation_sent_at,
                 };
             },
