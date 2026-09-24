@@ -1,0 +1,16 @@
+version: v1.5.0
+ignore:
+  SNYK-JS-ESBUILD-17750822:
+    - '*':
+        reason: >-
+          Forcing esbuild to 0.28.1 across the dependency tree broke
+          `npm run develop` (Vite's esbuild@^0.21.3 dependency failed to
+          transform destructuring for its configured legacy browser targets),
+          so the override was reverted. The advisory requires a Deno process
+          with an attacker-controlled NPM_CONFIG_REGISTRY during
+          installFromNPM; this project runs on Node.js/npm only and does not
+          invoke esbuild's Deno install path. Revisit if a compatible patched
+          esbuild release becomes available for the vite@5.4.21 dependency
+          range.
+        expires: 2026-12-23T00:00:00.000Z
+patch: {}
