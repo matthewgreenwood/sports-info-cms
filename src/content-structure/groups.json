@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "sections": {
+    "collectionTypes": {
+      "groups": [
+        {
+          "parent": null,
+          "name": "Accommodation",
+          "id": "grp_d576c5351b4c49669078c489",
+          "children": [
+            {
+              "uid": "api::accommodation-room-type.accommodation-room-type",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::accommodation-booking.accommodation-booking",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::accommodation-hotel.accommodation-hotel",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::hotel-room-type-link.hotel-room-type-link",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::hotel-room-inventory.hotel-room-inventory",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Delegations",
+          "id": "grp_be3f269a6e0747fab5d8e9e3",
+          "children": []
+        }
+      ]
+    },
+    "singleTypes": {
+      "groups": []
+    }
+  }
+}
