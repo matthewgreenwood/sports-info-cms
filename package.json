@@ -9,6 +9,7 @@
     "deploy": "strapi deploy",
     "dev": "strapi develop",
     "develop": "strapi develop",
+    "db:setup:local-postgres": "powershell -ExecutionPolicy Bypass -File scripts/setup-local-postgres.ps1",
     "start": "strapi start",
     "strapi": "strapi",
     "migrate:hotel-inventory": "node scripts/migrate-hotel-room-inventory.js",

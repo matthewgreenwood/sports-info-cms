@@ -71,6 +71,87 @@
               "type": "contentType"
             }
           ]
+        },
+        {
+          "parent": null,
+          "name": "My Event",
+          "id": "grp_e83c79ce48ce4103b03f6543",
+          "children": [
+            {
+              "uid": "api::vault-number.vault-number",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::withdrawal.withdrawal",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::request-bar-raise.request-bar-raise",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::submitted-working-order.submitted-working-order",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::submitted-vault.submitted-vault",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Help",
+          "id": "grp_82fc6277e0164c448264cfa9",
+          "children": [
+            {
+              "uid": "api::loc-contact.loc-contact",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::emergency-contact.emergency-contact",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::meet-the-team.meet-the-team",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::feedback.feedback",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::ask-a-question.ask-a-question",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Schedule",
+          "id": "grp_c7b1d3d53c7444c2a0158007",
+          "children": [
+            {
+              "uid": "api::transport-shuttles-route.transport-shuttles-route",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::schedule-transport.schedule-transport",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::schedule-overview.schedule-overview",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::schedule-item-type.schedule-item-type",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::schedule-detail.schedule-detail",
+              "type": "contentType"
+            }
+          ]
         }
       ]
     },

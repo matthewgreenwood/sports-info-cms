@@ -4,7 +4,7 @@
   "info": {
     "singularName": "accommodation-booking",
     "pluralName": "accommodation-bookings",
-    "displayName": "Accommodation Request"
+    "displayName": "Accomm Request"
   },
   "options": {
     "draftAndPublish": true

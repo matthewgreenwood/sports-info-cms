@@ -122,8 +122,8 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::accommodation-booking.accommodation-booking",
-      "mappedBy": "booking_allocated_members",
-      "private": true
+      "private": true,
+      "mappedBy": "booking_allocated_members"
     },
     "event_status": {
       "type": "enumeration",

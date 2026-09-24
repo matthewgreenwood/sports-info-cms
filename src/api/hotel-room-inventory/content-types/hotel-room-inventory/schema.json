@@ -4,7 +4,7 @@
   "info": {
     "singularName": "hotel-room-inventory",
     "pluralName": "hotel-room-inventories",
-    "displayName": "Accommodation Hotel Room Inventory"
+    "displayName": "Accomm Hotel Room Inventory"
   },
   "options": {
     "draftAndPublish": true

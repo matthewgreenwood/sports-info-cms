@@ -4,7 +4,7 @@
   "info": {
     "singularName": "accommodation-hotel",
     "pluralName": "accommodation-hotels",
-    "displayName": "Accommodation Hotels"
+    "displayName": "Accomm Hotels"
   },
   "options": {
     "draftAndPublish": true

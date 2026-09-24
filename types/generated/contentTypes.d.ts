@@ -447,7 +447,7 @@ export interface ApiAccommodationBookingAccommodationBooking
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_bookings';
   info: {
-    displayName: 'Accommodation Request';
+    displayName: 'Accomm Request';
     pluralName: 'accommodation-bookings';
     singularName: 'accommodation-booking';
   };
@@ -523,7 +523,7 @@ export interface ApiAccommodationHotelAccommodationHotel
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_hotels';
   info: {
-    displayName: 'Accommodation Hotels';
+    displayName: 'Accomm Hotels';
     pluralName: 'accommodation-hotels';
     singularName: 'accommodation-hotel';
   };
@@ -576,7 +576,7 @@ export interface ApiAccommodationRoomTypeAccommodationRoomType
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_room_types';
   info: {
-    displayName: 'Accommodation Room Types';
+    displayName: 'Accomm Room Types';
     pluralName: 'accommodation-room-types';
     singularName: 'accommodation-room-type';
   };
@@ -978,7 +978,7 @@ export interface ApiHotelRoomInventoryHotelRoomInventory
   extends Struct.CollectionTypeSchema {
   collectionName: 'hotel_room_inventories';
   info: {
-    displayName: 'Accommodation Hotel Room Inventory';
+    displayName: 'Accomm Hotel Room Inventory';
     pluralName: 'hotel-room-inventories';
     singularName: 'hotel-room-inventory';
   };
@@ -1020,7 +1020,7 @@ export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
   extends Struct.CollectionTypeSchema {
   collectionName: 'hotel_room_type_links';
   info: {
-    displayName: 'Accommodation Hotel Room Types';
+    displayName: 'Accomm Hotel Room Types';
     pluralName: 'hotel-room-type-links';
     singularName: 'hotel-room-type-link';
   };
@@ -1823,35 +1823,6 @@ export interface ApiVenueLocationVenueLocation
   };
 }
 
-export interface ApiVisaInvitationLetterTemplateVisaInvitationLetterTemplate
-  extends Struct.SingleTypeSchema {
-  collectionName: 'visa_invitation_letter_templates';
-  info: {
-    displayName: 'Visa Invitation Letter Template';
-    pluralName: 'visa-invitation-letter-templates';
-    singularName: 'visa-invitation-letter-template';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    content: Schema.Attribute.Blocks;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::visa-invitation-letter-template.visa-invitation-letter-template'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface ApiWithdrawalWithdrawal extends Struct.CollectionTypeSchema {
   collectionName: 'withdrawals';
   info: {
@@ -2457,7 +2428,6 @@ declare module '@strapi/strapi' {
       'api::user-invitation.user-invitation': ApiUserInvitationUserInvitation;
       'api::vault-number.vault-number': ApiVaultNumberVaultNumber;
       'api::venue-location.venue-location': ApiVenueLocationVenueLocation;
-      'api::visa-invitation-letter-template.visa-invitation-letter-template': ApiVisaInvitationLetterTemplateVisaInvitationLetterTemplate;
       'api::withdrawal.withdrawal': ApiWithdrawalWithdrawal;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
