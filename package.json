@@ -43,6 +43,9 @@
     "node": "24.x",
     "npm": ">=6.0.0"
   },
+  "overrides": {
+    "esbuild": "0.28.1"
+  },
   "strapi": {
     "uuid": "3cd43bbc-2d3e-4071-994f-432de2d45644",
     "installId": "a3dffe7cc1db3a25fa29b7037c0dc834b46db9870b6d282131318ccabf2cd36e"
