@@ -36,6 +36,10 @@
           "id": "grp_be3f269a6e0747fab5d8e9e3",
           "children": [
             {
+              "uid": "api::arrival-departure.arrival-departure",
+              "type": "contentType"
+            },
+            {
               "uid": "api::accreditation-role.accreditation-role",
               "type": "contentType"
             },
@@ -149,6 +153,48 @@
             },
             {
               "uid": "api::schedule-detail.schedule-detail",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Users",
+          "id": "grp_a72f8bfed4eb4e94ad5baae9",
+          "children": [
+            {
+              "uid": "api::push-notification.push-notification",
+              "type": "contentType"
+            },
+            {
+              "uid": "plugin::users-permissions.user",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::user-invitation.user-invitation",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::password-reset.password-reset",
+              "type": "contentType"
+            }
+          ]
+        },
+        {
+          "parent": null,
+          "name": "Sport",
+          "id": "grp_fc8a7601dbd4438d93d2ee4f",
+          "children": [
+            {
+              "uid": "api::competition.competition",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::discipline.discipline",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::apparatus.apparatus",
               "type": "contentType"
             }
           ]
