@@ -198,6 +198,21 @@
               "type": "contentType"
             }
           ]
+        },
+        {
+          "parent": null,
+          "name": "Venue",
+          "id": "grp_ba25ad95830740a9848bd479",
+          "children": [
+            {
+              "uid": "api::venue-location.venue-location",
+              "type": "contentType"
+            },
+            {
+              "uid": "api::resource.resource",
+              "type": "contentType"
+            }
+          ]
         }
       ]
     },
