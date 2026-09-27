@@ -4,7 +4,7 @@
   "info": {
     "singularName": "add-delegation-member",
     "pluralName": "add-delegation-members",
-    "displayName": "Add Delegation Members"
+    "displayName": "Delegation Members"
   },
   "options": {
     "draftAndPublish": true
@@ -127,13 +127,13 @@
     },
     "event_status": {
       "type": "enumeration",
+      "default": "Long List",
       "enum": [
         "Long List",
         "Delegation Member",
         "Cancelled",
         "Deleted"
-      ],
-      "default": "Long List"
+      ]
     }
   }
 }

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "information-welcome",
     "pluralName": "information-welcomes",
-    "displayName": "Information Welcome"
+    "displayName": "Welcome"
   },
   "options": {
     "draftAndPublish": true

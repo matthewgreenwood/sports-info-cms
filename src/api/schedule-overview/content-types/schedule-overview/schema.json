@@ -4,7 +4,7 @@
   "info": {
     "singularName": "schedule-overview",
     "pluralName": "schedule-overviews",
-    "displayName": "Schedule Overview"
+    "displayName": "Overview"
   },
   "options": {
     "draftAndPublish": true

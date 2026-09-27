@@ -447,7 +447,7 @@ export interface ApiAccommodationBookingAccommodationBooking
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_bookings';
   info: {
-    displayName: 'Accomm Request';
+    displayName: 'Requests';
     pluralName: 'accommodation-bookings';
     singularName: 'accommodation-booking';
   };
@@ -523,7 +523,7 @@ export interface ApiAccommodationHotelAccommodationHotel
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_hotels';
   info: {
-    displayName: 'Accomm Hotels';
+    displayName: 'Hotels';
     pluralName: 'accommodation-hotels';
     singularName: 'accommodation-hotel';
   };
@@ -576,7 +576,7 @@ export interface ApiAccommodationRoomTypeAccommodationRoomType
   extends Struct.CollectionTypeSchema {
   collectionName: 'accommodation_room_types';
   info: {
-    displayName: 'Accomm Room Types';
+    displayName: 'Event Room Types';
     pluralName: 'accommodation-room-types';
     singularName: 'accommodation-room-type';
   };
@@ -644,7 +644,7 @@ export interface ApiAddDelegationMemberAddDelegationMember
   extends Struct.CollectionTypeSchema {
   collectionName: 'add_delegation_members';
   info: {
-    displayName: 'Add Delegation Members';
+    displayName: 'Delegation Members';
     pluralName: 'add-delegation-members';
     singularName: 'add-delegation-member';
   };
@@ -978,7 +978,7 @@ export interface ApiHotelRoomInventoryHotelRoomInventory
   extends Struct.CollectionTypeSchema {
   collectionName: 'hotel_room_inventories';
   info: {
-    displayName: 'Accomm Hotel Room Inventory';
+    displayName: 'Hotel Room Inventories';
     pluralName: 'hotel-room-inventories';
     singularName: 'hotel-room-inventory';
   };
@@ -1020,7 +1020,7 @@ export interface ApiHotelRoomTypeLinkHotelRoomTypeLink
   extends Struct.CollectionTypeSchema {
   collectionName: 'hotel_room_type_links';
   info: {
-    displayName: 'Accomm Hotel Room Types';
+    displayName: 'Hotel Room Types';
     pluralName: 'hotel-room-type-links';
     singularName: 'hotel-room-type-link';
   };
@@ -1066,7 +1066,7 @@ export interface ApiInformationMedicalInformationMedical
   extends Struct.CollectionTypeSchema {
   collectionName: 'information_medicals';
   info: {
-    displayName: 'Information Medical';
+    displayName: 'Medical';
     pluralName: 'information-medicals';
     singularName: 'information-medical';
   };
@@ -1100,7 +1100,7 @@ export interface ApiInformationNewsItemInformationNewsItem
   extends Struct.CollectionTypeSchema {
   collectionName: 'information_news_items';
   info: {
-    displayName: 'Information News';
+    displayName: 'News';
     pluralName: 'information-news-items';
     singularName: 'information-news-item';
   };
@@ -1136,7 +1136,7 @@ export interface ApiInformationTouristInformationTourist
   extends Struct.CollectionTypeSchema {
   collectionName: 'information_tourists';
   info: {
-    displayName: 'Information Tourist';
+    displayName: 'Tourist Infor';
     pluralName: 'information-tourists';
     singularName: 'information-tourist';
   };
@@ -1170,7 +1170,7 @@ export interface ApiInformationVenueInformationVenue
   extends Struct.CollectionTypeSchema {
   collectionName: 'information_venues';
   info: {
-    displayName: 'Information Venue';
+    displayName: 'Venue';
     pluralName: 'information-venues';
     singularName: 'information-venue';
   };
@@ -1204,7 +1204,7 @@ export interface ApiInformationWelcomeInformationWelcome
   extends Struct.CollectionTypeSchema {
   collectionName: 'information_welcomes';
   info: {
-    displayName: 'Information Welcome';
+    displayName: 'Welcome';
     pluralName: 'information-welcomes';
     singularName: 'information-welcome';
   };
@@ -1455,7 +1455,7 @@ export interface ApiScheduleDetailScheduleDetail
   extends Struct.CollectionTypeSchema {
   collectionName: 'schedule_details';
   info: {
-    displayName: 'Schedule Detail';
+    displayName: 'Detail';
     pluralName: 'schedule-details';
     singularName: 'schedule-detail';
   };
@@ -1493,7 +1493,7 @@ export interface ApiScheduleItemTypeScheduleItemType
   extends Struct.CollectionTypeSchema {
   collectionName: 'schedule_item_types';
   info: {
-    displayName: 'Schedule Item Type';
+    displayName: 'Item Type';
     pluralName: 'schedule-item-types';
     singularName: 'schedule-item-type';
   };
@@ -1522,7 +1522,7 @@ export interface ApiScheduleOverviewScheduleOverview
   extends Struct.CollectionTypeSchema {
   collectionName: 'schedule_overviews';
   info: {
-    displayName: 'Schedule Overview';
+    displayName: 'Overview';
     pluralName: 'schedule-overviews';
     singularName: 'schedule-overview';
   };
@@ -1552,7 +1552,7 @@ export interface ApiScheduleTransportScheduleTransport
   extends Struct.CollectionTypeSchema {
   collectionName: 'schedule_transports';
   info: {
-    displayName: 'Schedule Transport Shuttles';
+    displayName: 'Transport Shuttles';
     pluralName: 'schedule-transports';
     singularName: 'schedule-transport';
   };

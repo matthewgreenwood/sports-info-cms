@@ -4,7 +4,7 @@
   "info": {
     "singularName": "information-medical",
     "pluralName": "information-medicals",
-    "displayName": "Information Medical"
+    "displayName": "Medical"
   },
   "options": {
     "draftAndPublish": true

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "hotel-room-type-link",
     "pluralName": "hotel-room-type-links",
-    "displayName": "Accomm Hotel Room Types"
+    "displayName": "Hotel Room Types"
   },
   "options": {
     "draftAndPublish": true

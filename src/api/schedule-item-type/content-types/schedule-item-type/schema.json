@@ -4,7 +4,7 @@
   "info": {
     "singularName": "schedule-item-type",
     "pluralName": "schedule-item-types",
-    "displayName": "Schedule Item Type"
+    "displayName": "Item Type"
   },
   "options": {
     "draftAndPublish": true

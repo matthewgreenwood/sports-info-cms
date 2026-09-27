@@ -4,7 +4,7 @@
   "info": {
     "singularName": "accommodation-room-type",
     "pluralName": "accommodation-room-types",
-    "displayName": "Accomm Room Types"
+    "displayName": "Event Room Types"
   },
   "options": {
     "draftAndPublish": true

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "schedule-detail",
     "pluralName": "schedule-details",
-    "displayName": "Schedule Detail"
+    "displayName": "Detail"
   },
   "options": {
     "draftAndPublish": true

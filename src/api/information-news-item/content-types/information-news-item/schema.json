@@ -4,7 +4,7 @@
   "info": {
     "singularName": "information-news-item",
     "pluralName": "information-news-items",
-    "displayName": "Information News"
+    "displayName": "News"
   },
   "options": {
     "draftAndPublish": true
@@ -28,7 +28,7 @@
       ]
     },
     "visible_to_roles": {
-      "type": "json",
+      "type": "customField",
       "customField": "global::news-role-checkboxes"
     }
   }
