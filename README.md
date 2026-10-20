@@ -32,6 +32,13 @@ npm run build
 yarn build
 ```
 
+## Manage delegations
+
+Saving a delegation member in Manage > Delegations saves and publishes the
+member's changes so they are available to the Sports Info app. Bulk event-status
+changes also save and publish each selected member. Success is only reported
+after publishing succeeds; failed saves or publishes are reported as errors.
+
 ## ⚙️ Deployment
 
 Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.

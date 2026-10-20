@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFetchClient } from '@strapi/strapi/admin';
 
 const DelegationsPage = () => {
-  const { get, put } = useFetchClient();
+  const { get, put, post } = useFetchClient();
   const [downloadState, setDownloadState] = useState('idle'); // 'idle' | 'loading' | 'error'
   const [downloadError, setDownloadError] = useState(null);
 
@@ -110,7 +110,11 @@ const DelegationsPage = () => {
           passport_nationality: form.passport_nationality || null,
         }
       );
-      // Update the local record so the row label reflects the saved values immediately
+      await post(
+        `/content-manager/collection-types/api::add-delegation-member.add-delegation-member/${docId}/actions/publish`,
+        {}
+      );
+      // Only reflect the saved values after they are also published to the app.
       setAllMembers((prev) => prev.map((rec) => {
         if (rec.documentId !== docId) return rec;
         const newRole = allRoles.find((r) => r.documentId === form.role_doc_id);
@@ -128,7 +132,7 @@ const DelegationsPage = () => {
         };
       }));
       setSavingMap((prev) => ({ ...prev, [docId]: 'success' }));
-      setSaveMsgMap((prev) => ({ ...prev, [docId]: 'Changes saved.' }));
+      setSaveMsgMap((prev) => ({ ...prev, [docId]: 'Changes saved and published.' }));
       setTimeout(() => setSavingMap((prev) => ({ ...prev, [docId]: 'idle' })), 3000);
     } catch (err) {
       const msg = err?.response?.data?.error?.message ?? err?.message ?? 'Unknown error';
@@ -143,7 +147,7 @@ const DelegationsPage = () => {
     setBulkSaveMsg(null);
     const idsToUpdate = [...selectedIds];
     const statusToApply = bulkStatus;
-    const savedIds = new Set();   // tracks records where PUT succeeded
+    const savedIds = new Set();   // tracks records successfully saved and published
     let errorCount = 0;
 
     try {
@@ -167,6 +171,10 @@ const DelegationsPage = () => {
               passport_nationality: m.passport_nationality || null,
             }
           );
+          await post(
+            `/content-manager/collection-types/api::add-delegation-member.add-delegation-member/${docId}/actions/publish`,
+            {}
+          );
           savedIds.add(docId);
         } catch (putErr) {
           errorCount++;
@@ -185,9 +193,9 @@ const DelegationsPage = () => {
     setBulkStatus('');
     setBulkSaving(false);
     if (errorCount === 0) {
-      setBulkSaveMsg(`${successCount} record${successCount !== 1 ? 's' : ''} updated.`);
+      setBulkSaveMsg(`${successCount} record${successCount !== 1 ? 's' : ''} saved and published.`);
     } else {
-      setBulkSaveMsg(`${successCount} updated, ${errorCount} failed.`);
+      setBulkSaveMsg(`${successCount} saved and published, ${errorCount} failed.`);
     }
     setTimeout(() => setBulkSaveMsg(null), 4000);
   };
