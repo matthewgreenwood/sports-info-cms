@@ -2,6 +2,12 @@
 
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
+## Project setup
+
+This project uses Strapi **5.58.0** and Node.js **24.x**. Install the locked
+dependencies with `npm ci`, then run `npm run build` before starting in production.
+Back up your database and uploaded files before deploying a Strapi upgrade.
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
