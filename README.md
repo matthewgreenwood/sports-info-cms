@@ -4,13 +4,16 @@ Strapi comes with a full featured [Command Line Interface](https://docs.strapi.i
 
 ## Project setup
 
-This project uses Strapi **5.62.0** and Node.js **24.x**. Install the locked
+This project uses Strapi **5.62.0** and Node.js **26.x LTS**. Install the locked
 dependencies with `npm ci`, then run `npm run build` before starting in production.
 Back up your database and uploaded files before deploying a Strapi upgrade.
 
 For Coolify, use the Dockerfile build pack with the root `Dockerfile` and
-container port `1337`. The Dockerfile pins Node.js to **24.22.3**. Keep the
+container port `1337`. The Dockerfile pins Node.js to **26.13.1**. Keep the
 application secrets and PostgreSQL settings in Coolify's runtime environment.
+
+The project provides a local compatibility package for
+`buffer-equal-constant-time` because Node.js 26 removed `SlowBuffer`.
 
 ### `develop`
 
