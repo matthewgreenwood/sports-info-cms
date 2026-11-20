@@ -8,6 +8,10 @@ This project uses Strapi **5.62.0** and Node.js **24.x**. Install the locked
 dependencies with `npm ci`, then run `npm run build` before starting in production.
 Back up your database and uploaded files before deploying a Strapi upgrade.
 
+For Coolify, use the Dockerfile build pack with the root `Dockerfile` and
+container port `1337`. The Dockerfile pins Node.js to **24.22.3**. Keep the
+application secrets and PostgreSQL settings in Coolify's runtime environment.
+
 ### `develop`
 
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
