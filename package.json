@@ -27,7 +27,6 @@
     "@strapi/upload": "5.62.0",
     "@velosofy/strapi-plugin-data-exporter": "^1.3.0",
     "axios": "^1.13.2",
-    "better-sqlite3": "13.0.2",
     "cloudinary": "^2.8.0",
     "get-stream": "^9.0.1",
     "pdfkit": "^0.17.2",
