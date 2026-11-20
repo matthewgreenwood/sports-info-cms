@@ -4,7 +4,7 @@ Strapi comes with a full featured [Command Line Interface](https://docs.strapi.i
 
 ## Project setup
 
-This project uses Strapi **5.60.0** and Node.js **24.x**. Install the locked
+This project uses Strapi **5.62.0** and Node.js **24.x**. Install the locked
 dependencies with `npm ci`, then run `npm run build` before starting in production.
 Back up your database and uploaded files before deploying a Strapi upgrade.
 
